@@ -1,10 +1,10 @@
-package com.mdibaiee.supersnake;
+package com.mywill.supersnake;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.mdibaiee.supersnake.SuperSnake;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -13,6 +13,13 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useAccelerometer = false;
 		config.useCompass = false;
-		initialize(new SuperSnake(), config);
+    SuperSnake superSnake = new SuperSnake();
+    superSnake.setOnButtonPress(new SuperSnake.OnButtonPress() {
+      @Override
+      public void onClickPurchase() {
+       startActivity(new Intent(getApplication(), PurchaseActivity.class));
+      }
+    });
+		initialize(superSnake, config);
 	}
 }

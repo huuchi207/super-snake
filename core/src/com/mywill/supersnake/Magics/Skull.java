@@ -1,9 +1,9 @@
-package com.mdibaiee.supersnake.Magics;
+package com.mywill.supersnake.Magics;
 
 import com.badlogic.gdx.utils.Array;
-import com.mdibaiee.supersnake.Colors;
-import com.mdibaiee.supersnake.Magic;
-import com.mdibaiee.supersnake.Snake;
+import com.mywill.supersnake.Colors;
+import com.mywill.supersnake.Magic;
+import com.mywill.supersnake.Snake;
 
 public class Skull extends Magic {
     private Snake snake;

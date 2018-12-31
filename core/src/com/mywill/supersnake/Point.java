@@ -1,4 +1,4 @@
-package com.mdibaiee.supersnake;
+package com.mywill.supersnake;
 
 import com.badlogic.gdx.Gdx;
 

@@ -1,4 +1,4 @@
-package com.mdibaiee.supersnake;
+package com.mywill.supersnake;
 
 public class SizedPoint extends Point {
     public float size;

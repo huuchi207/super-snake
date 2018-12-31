@@ -6,10 +6,16 @@ buildscript {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        google()
+
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
-        
+        classpath 'com.android.tools.build:gradle:2.3.2'
+
 
     }
 }
@@ -20,7 +26,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "Super Snake"
+        appName = "Super Droid Snake"
         gdxVersion = '1.9.8'
         roboVMVersion = '2.3.3'
         box2DLightsVersion = '1.4'
@@ -33,6 +39,11 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        jcenter()
     }
 }
 
