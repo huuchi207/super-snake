@@ -68,13 +68,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
   }
 
   private void getProductList(){
-    String[] list= {"10_days_using",
-        "10_days_using_high_quality_record",
-        "10_records_storage",
-        "5_days_using", "7_days_using",
-        "7_days_using_high_quality_record",
-        "8_records_storage", "add_5_records_storage", "add_6_records_storage",
-        "reserved_product_id_1", "reserved_product_id_2","reserved_product_id_3"};
+    String[] list= {"reserved_product_id_1", "reserved_product_id_2","reserved_product_id_3","reserved_product_id_4"};
     List<String> skuList = Arrays.asList(list);
     SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
     params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
