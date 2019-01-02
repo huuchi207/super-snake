@@ -17,7 +17,7 @@ public class AndroidLauncher extends AndroidApplication {
     superSnake.setOnButtonPress(new SuperSnake.OnButtonPress() {
       @Override
       public void onClickPurchase() {
-       startActivity(new Intent(getApplication(), PurchaseActivity.class));
+       startActivity(new Intent(getApplicationContext(), PurchaseActivity.class));
       }
     });
 		initialize(superSnake, config);
