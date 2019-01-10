@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "524634176980",
+    "firebase_url": "https://super-droid-snake.firebaseio.com",
+    "project_id": "super-droid-snake",
+    "storage_bucket": "super-droid-snake.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524634176980:android:0c1db4e292b06181",
+        "android_client_info": {
+          "package_name": "com.mywill.supersnake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524634176980-3ofvb4tt5ep2qg92uqin3g2t64h2jh8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH3Ry_H3aC9qeCgKXfFHocTgMAQRBGgqE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

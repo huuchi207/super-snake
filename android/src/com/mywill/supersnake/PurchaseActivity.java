@@ -16,6 +16,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,11 +27,14 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
   private List<SkuDetails> listData = new ArrayList<>();
   private RecyclerView mRecyclerView;
   private PurchaseListAdapter adapter;
+  private FirebaseAnalytics mFirebaseAnalytics;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_purchase);
+
+    mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     mRecyclerView.setHasFixedSize(true);
@@ -68,7 +72,8 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
   }
 
   private void getProductList(){
-    String[] list= {"reserved_product_id_1", "reserved_product_id_2","reserved_product_id_3","reserved_product_id_4"};
+    String[] list= {"reserved_product_id_1", "reserved_product_id_2","reserved_product_id_3","reserved_product_id_4",
+        "reserved_product_id_5", "reserved_product_id_6","reserved_product_id_7","reserved_product_id_8"};
     List<String> skuList = Arrays.asList(list);
     SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
     params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
@@ -105,10 +110,15 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
             }
           }});
       }
-    } else if (responseCode == BillingClient.BillingResponse.USER_CANCELED) {
-      // Handle an error caused by a user cancelling the purchase flow.
     } else {
-      // Handle any other error codes.
+      // Handle an error caused by a user cancelling the purchase flow.
+      Bundle bundle = new Bundle();
+      bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "BillingError");
+      bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text");
+      BillingResponseCode code = BillingResponseCode.valueOf(responseCode);
+      bundle.putString(FirebaseAnalytics.Param.CONTENT, code != null
+          ? code.toString() : "");
+      mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, bundle);
     }
   }
 }
