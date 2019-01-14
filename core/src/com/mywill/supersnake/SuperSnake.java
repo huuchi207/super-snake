@@ -254,10 +254,18 @@ public class SuperSnake extends ApplicationAdapter {
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
-        font.dispose();
-        shapeRenderer.dispose();
+	  if (batch!=null){
+      batch.dispose();
+    }
+		if (img!=null){
+      img.dispose();
+    }
+    if (font!=null){
+      font.dispose();
+    }
+    if (shapeRenderer!=null){
+      shapeRenderer.dispose();
+    }
 	}
 	public SuperSnake setOnButtonPress(OnButtonPress onButtonPress){
 	  this.onButtonPress= onButtonPress;
