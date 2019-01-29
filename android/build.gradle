@@ -104,8 +104,8 @@ idea {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.billingclient:billing:1.2'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.billingclient:billing:1.2'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
 }
