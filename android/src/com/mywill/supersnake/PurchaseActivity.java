@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.android.billingclient.api.BillingClient.BillingResponse.OK;
+
 public class PurchaseActivity extends AppCompatActivity implements PurchasesUpdatedListener {
   private BillingClient mBillingClient;
   private List<SkuDetails> listData = new ArrayList<>();
@@ -58,11 +60,12 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
     mBillingClient.startConnection(new BillingClientStateListener() {
       @Override
       public void onBillingSetupFinished(@BillingClient.BillingResponse int billingResponseCode) {
-        if (billingResponseCode == BillingClient.BillingResponse.OK) {
+        if (billingResponseCode == OK) {
           // The billing client is ready. You can query purchases here.
-          getProductList();
+          getAllPurchaseSession();
         }
       }
+
       @Override
       public void onBillingServiceDisconnected() {
         // Try to restart the connection on the next request to
@@ -71,17 +74,46 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
     });
   }
 
-  private void getProductList(){
-    String[] list= {"reserved_product_id_1", "reserved_product_id_2","reserved_product_id_3","reserved_product_id_4",
-        "reserved_product_id_5", "reserved_product_id_6","reserved_product_id_7","reserved_product_id_8"};
+  Integer done = 0;
+
+  private void getAllPurchaseSession() {
+    Purchase.PurchasesResult purchasesResult = mBillingClient.queryPurchases(BillingClient.SkuType.INAPP);
+    if (purchasesResult != null && purchasesResult.getResponseCode() == OK) {
+      final int size = purchasesResult.getPurchasesList().size();
+      if (size == 0) {
+        getProductList();
+        return;
+      }
+      for (Purchase purchase : purchasesResult.getPurchasesList()) {
+        mBillingClient.consumeAsync(purchase.getPurchaseToken(), new ConsumeResponseListener() {
+          @Override
+          public void onConsumeResponse(int responseCode, String purchaseToken) {
+            done++;
+            if (done == size) {
+              getProductList();
+            }
+          }
+        });
+      }
+    }
+  }
+
+  private void getProductList() {
+    String[] list = {
+        "reserved_product_id_1", "reserved_product_id_2", "reserved_product_id_3",
+        "reserved_product_id_4", "reserved_product_id_5", "reserved_product_id_6",
+        "product_id_1", "product_id_2", "product_id_3",
+        "product_id_4", "product_id_5", "product_id_6",
+        "product_id_7", "product_id_8", "product_id_9",
+    };
     List<String> skuList = Arrays.asList(list);
     SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
     params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
     mBillingClient.querySkuDetailsAsync(params.build(),
         new SkuDetailsResponseListener() {
           @Override
-          public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList){
-            if (responseCode == BillingClient.BillingResponse.OK
+          public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
+            if (responseCode == OK
                 && skuDetailsList != null) {
               listData.clear();
               listData.addAll(skuDetailsList);
@@ -95,14 +127,14 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
 
   @Override
   public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
-    if (responseCode == BillingClient.BillingResponse.OK
+    if (responseCode == OK
         && purchases != null) {
       Toast.makeText(this, "Purchase Successfully", Toast.LENGTH_SHORT).show();
       for (Purchase purchase : purchases) {
         mBillingClient.consumeAsync(purchase.getPurchaseToken(), new ConsumeResponseListener() {
           @Override
           public void onConsumeResponse(@BillingClient.BillingResponse int responseCode, String outToken) {
-            if (responseCode == BillingClient.BillingResponse.OK) {
+            if (responseCode == OK) {
               // Handle the success of the consume operation.
               // For example, increase the number of coins inside the user's basket.
               Toast.makeText(PurchaseActivity.this, "Consume Successfully", Toast.LENGTH_SHORT).show();
