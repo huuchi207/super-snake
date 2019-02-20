@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
@@ -129,7 +128,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
   public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
     if (responseCode == OK
         && purchases != null) {
-      Toast.makeText(this, "Purchase Successfully", Toast.LENGTH_SHORT).show();
+      DialogFactory.createSimpleOkErrorDialog(PurchaseActivity.this, "Purchase Successfully", "Info").show();
       for (Purchase purchase : purchases) {
         mBillingClient.consumeAsync(purchase.getPurchaseToken(), new ConsumeResponseListener() {
           @Override
@@ -137,8 +136,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
             if (responseCode == OK) {
               // Handle the success of the consume operation.
               // For example, increase the number of coins inside the user's basket.
-              Toast.makeText(PurchaseActivity.this, "Consume Successfully", Toast.LENGTH_SHORT).show();
-
+              DialogFactory.createSimpleOkErrorDialog(PurchaseActivity.this, "Consume Successfully", "Info").show();
             }
           }});
       }
