@@ -128,7 +128,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
   public void onPurchasesUpdated(int responseCode, @Nullable List<Purchase> purchases) {
     if (responseCode == OK
         && purchases != null) {
-      DialogFactory.createSimpleOkErrorDialog(PurchaseActivity.this, "Purchase Successfully", "Info").show();
+      DialogFactory.createSimpleOkErrorDialog(PurchaseActivity.this, "Info","Purchase Successfully").show();
       for (Purchase purchase : purchases) {
         mBillingClient.consumeAsync(purchase.getPurchaseToken(), new ConsumeResponseListener() {
           @Override
@@ -136,7 +136,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
             if (responseCode == OK) {
               // Handle the success of the consume operation.
               // For example, increase the number of coins inside the user's basket.
-              DialogFactory.createSimpleOkErrorDialog(PurchaseActivity.this, "Consume Successfully", "Info").show();
+              DialogFactory.createSimpleOkErrorDialog(PurchaseActivity.this,"Info", "Consume Successfully" ).show();
             }
           }});
       }
