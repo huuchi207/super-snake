@@ -9,14 +9,16 @@
     android:allowBackup="true"
     android:icon="@drawable/ic_launcher"
     android:label="Super Droid Snake"
-    android:theme="@style/GdxTheme">
+    android:theme="@style/Theme.AppCompat">
     <activity android:name=".LicenseAcitivity"
       android:theme="@style/Theme.AppCompat"></activity>
     <activity
       android:name=".AndroidLauncher"
       android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize"
       android:label="Super Droid Snake"
-      android:screenOrientation="portrait">
+      android:screenOrientation="portrait"
+      android:theme="@style/Theme.AppCompat"
+      >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 

@@ -14,11 +14,12 @@ public class AndroidLauncher extends AndroidApplication {
     AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
     config.useAccelerometer = false;
     config.useCompass = false;
+
     SuperSnake superSnake = new SuperSnake();
     superSnake.setOnButtonPress(new SuperSnake.OnButtonPress() {
       @Override
       public void onClickPurchase() {
-        startActivityForResult(new Intent(getApplicationContext(), PurchaseActivity.class), 207);
+        startActivity(new Intent(getApplicationContext(), PurchaseActivity.class));
       }
 
       @Override
@@ -29,15 +30,4 @@ public class AndroidLauncher extends AndroidApplication {
     initialize(superSnake, config);
   }
 
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == 207) {
-      if (resultCode == Activity.RESULT_OK) {
-        DialogFactory.createSimpleOkErrorDialog(this, "Info", "Purchase and Consume Successfully").show();
-        if (resultCode == Activity.RESULT_CANCELED) {
-          //Write your code if there's no result
-        }
-      }
-    }
-  }
 }
