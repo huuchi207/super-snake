@@ -1,10 +1,7 @@
 package com.mywill.supersnake;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,13 +18,14 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.android.billingclient.api.BillingClient.BillingResponse.OK;
+
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class PurchaseActivity extends AppCompatActivity implements PurchasesUpdatedListener {
   private BillingClient mBillingClient;
@@ -170,18 +168,12 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
 //      mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, bundle);
     }
   }
-  private synchronized void showProgressDialog() {
-    if (pd == null) {
-      pd = new ProgressDialog(this);
-      pd.setMessage("Loading");
-      pd.setCancelable(false);
-    }
-    pd.show();
+  private void showProgressDialog() {
+    findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
   }
 
-  private synchronized void hideProgressDialog() {
-    if (pd != null && pd.isShowing()){
-      pd.hide();
-    }
+  private void hideProgressDialog() {
+    findViewById(R.id.progressbar).setVisibility(View.GONE);
+
   }
 }

@@ -16,4 +16,13 @@
     android:src="@android:drawable/ic_popup_sync"
     android:layout_margin="16dp"
     android:layout_alignParentEnd="true" />
+
+  <ProgressBar
+    android:id="@+id/progressbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:backgroundTint="@android:color/white"
+    android:indeterminateTint="#1a09d6"
+    />
 </RelativeLayout>
