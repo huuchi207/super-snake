@@ -21,7 +21,7 @@ android {
         applicationId "com.mywill.supersnake"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 11
+        versionCode 12
         versionName "1.0"
     }
     buildTypes {
@@ -84,7 +84,7 @@ task run(type: Exec) {
 idea {
     module {
         sourceDirs += file("src");
-        scopes = [ COMPILE: [plus:[project.configurations.compile]]]
+        scopes = [ COMPILE : [plus:[project.configurations.compile]]]
 
         iml {
             withXml {
@@ -94,7 +94,7 @@ idea {
                 builder.component(name: "FacetManager") {
                     facet(type: "android", name: "Android") {
                         configuration {
-                            option(name: "UPDATE_PROPERTY_FILES ", value:"true")
+                            option(name: "UPDATE_PROPERTY_FILES " , value:"true")
                         }
                     }
                 }
@@ -107,5 +107,5 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.billingclient:billing:1.2'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

@@ -110,14 +110,20 @@ public class SuperSnake extends ApplicationAdapter {
             float x = Gdx.input.getX();
             float y = Gdx.input.getY();
             if (x > WIDTH - 150 && y > HEIGHT - 60) {
-                paused = true;
-                return;
-            } else if (x > WIDTH - 350 && y > HEIGHT - 60){
               if (onButtonPress!=null){
                 onButtonPress.onClickPurchase();
               }
               return;
-            } else if (paused) {
+            } else if (x > WIDTH - 350 && y > HEIGHT - 60){
+              paused = true;
+              return;
+            } else if (x > WIDTH - 510 && y > HEIGHT - 60){
+              if (onButtonPress!=null){
+                onButtonPress.onClickLicense();
+              }
+              return;
+            }
+            else if (paused) {
                 paused = false;
                 return;
             }
@@ -143,23 +149,7 @@ public class SuperSnake extends ApplicationAdapter {
 
             font.draw(batch, "Simple, fast-paced snake game packed with extra fun!", WIDTH / 2 - 300, HEIGHT - 250);
             font.draw(batch, "Copyright (c) 2018 Mahdi Dibaiee", WIDTH / 2 - 100, HEIGHT - 300);
-            font.draw(batch, "License: ", 50, HEIGHT-400);
-            font.draw(batch, "Permission is hereby granted, free of charge, to any person obtaining a copy\n" +
-                "of this software and associated documentation files (the \"Software\"), to deal\n" +
-                "in the Software without restriction, including without limitation the rights\n" +
-                "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n" +
-                "copies of the Software, and to permit persons to whom the Software is\n" +
-                "furnished to do so, subject to the following conditions:\n", 50, HEIGHT - 450);
-//
-            font.draw(batch, "The above copyright notice and this permission notice shall be included in all\n" +
-                "copies or substantial portions of the Software.", 50, HEIGHT - 750);
-            font.draw(batch, "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n" +
-                "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n" +
-                "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n" +
-                "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n" +
-                "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n" +
-                "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n" +
-                "SOFTWARE.", 50, HEIGHT-1000);
+
             batch.end();
 
             pause_snake.draw(shapeRenderer);
@@ -247,8 +237,9 @@ public class SuperSnake extends ApplicationAdapter {
         font.draw(batch, "Points: " + snake.point, 20, 35);
         font.draw(batch, "Lives: " + snake.lives, 150, 35);
 
-        font.draw(batch, "About", WIDTH - 90, 35);
-        font.draw(batch, "Purchase", WIDTH- 250, 35);
+        font.draw(batch, "Purchase", WIDTH - 120, 35);
+        font.draw(batch, "About", WIDTH- 280, 35);
+        font.draw(batch, "License", WIDTH- 440, 35);
         batch.end();
 	}
 	
@@ -273,5 +264,6 @@ public class SuperSnake extends ApplicationAdapter {
   }
 	public interface OnButtonPress{
 	  void onClickPurchase();
+	  void onClickLicense();
   }
 }

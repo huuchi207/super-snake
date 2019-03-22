@@ -1,6 +1,9 @@
 package com.mywill.supersnake;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +18,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,14 +31,14 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
   private List<SkuDetails> listData = new ArrayList<>();
   private RecyclerView mRecyclerView;
   private PurchaseListAdapter adapter;
-  private FirebaseAnalytics mFirebaseAnalytics;
+//  private FirebaseAnalytics mFirebaseAnalytics;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_purchase);
 
-    mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//    mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     mRecyclerView.setHasFixedSize(true);
@@ -137,18 +140,23 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
               // Handle the success of the consume operation.
               // For example, increase the number of coins inside the user's basket.
               DialogFactory.createSimpleOkErrorDialog(PurchaseActivity.this,"Info", "Consume Successfully" ).show();
+              Intent returnIntent = new Intent();
+              returnIntent.putExtra("result","OK");
+              setResult(Activity.RESULT_OK,returnIntent);
+              finish();
+
             }
           }});
       }
     } else {
       // Handle an error caused by a user cancelling the purchase flow.
-      Bundle bundle = new Bundle();
-      bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "BillingError");
-      bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text");
-      BillingResponseCode code = BillingResponseCode.valueOf(responseCode);
-      bundle.putString(FirebaseAnalytics.Param.CONTENT, code != null
-          ? code.toString() : "");
-      mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, bundle);
+//      Bundle bundle = new Bundle();
+//      bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "BillingError");
+//      bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text");
+//      BillingResponseCode code = BillingResponseCode.valueOf(responseCode);
+//      bundle.putString(FirebaseAnalytics.Param.CONTENT, code != null
+//          ? code.toString() : "");
+//      mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, bundle);
     }
   }
 }
