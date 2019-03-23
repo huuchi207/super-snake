@@ -1,13 +1,13 @@
 package com.mywill.supersnake;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
@@ -18,7 +18,6 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
-//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,13 +25,15 @@ import java.util.List;
 
 import static com.android.billingclient.api.BillingClient.BillingResponse.OK;
 
+//import com.google.firebase.analytics.FirebaseAnalytics;
+
 public class PurchaseActivity extends AppCompatActivity implements PurchasesUpdatedListener {
   private BillingClient mBillingClient;
   private List<SkuDetails> listData = new ArrayList<>();
   private RecyclerView mRecyclerView;
   private PurchaseListAdapter adapter;
 //  private FirebaseAnalytics mFirebaseAnalytics;
-
+  private ProgressDialog pd;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
 //    mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-    mRecyclerView.setHasFixedSize(true);
+//    mRecyclerView.setHasFixedSize(true);
     LinearLayoutManager llm = new LinearLayoutManager(this);
     llm.setOrientation(LinearLayoutManager.VERTICAL);
     mRecyclerView.setLayoutManager(llm);
@@ -72,6 +73,12 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
       public void onBillingServiceDisconnected() {
         // Try to restart the connection on the next request to
         // Google Play by calling the startConnection() method.
+      }
+    });
+    findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        getProductList();
       }
     });
   }
@@ -111,15 +118,21 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
     List<String> skuList = Arrays.asList(list);
     SkuDetailsParams.Builder params = SkuDetailsParams.newBuilder();
     params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP);
+    showProgressDialog();
+    listData.clear();
+
     mBillingClient.querySkuDetailsAsync(params.build(),
         new SkuDetailsResponseListener() {
           @Override
           public void onSkuDetailsResponse(int responseCode, List<SkuDetails> skuDetailsList) {
+            hideProgressDialog();
+
             if (responseCode == OK
                 && skuDetailsList != null) {
-              listData.clear();
               listData.addAll(skuDetailsList);
               adapter.notifyDataSetChanged();
+            } else {
+              Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_SHORT).show();
             }
           }
         });
@@ -140,10 +153,6 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
               // Handle the success of the consume operation.
               // For example, increase the number of coins inside the user's basket.
               DialogFactory.createSimpleOkErrorDialog(PurchaseActivity.this,"Info", "Consume Successfully" ).show();
-              Intent returnIntent = new Intent();
-              returnIntent.putExtra("result","OK");
-              setResult(Activity.RESULT_OK,returnIntent);
-              finish();
 
             }
           }});
@@ -158,5 +167,13 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
 //          ? code.toString() : "");
 //      mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.ECOMMERCE_PURCHASE, bundle);
     }
+  }
+  private void showProgressDialog() {
+    findViewById(R.id.progressbar).setVisibility(View.VISIBLE);
+  }
+
+  private void hideProgressDialog() {
+    findViewById(R.id.progressbar).setVisibility(View.GONE);
+
   }
 }
