@@ -78,7 +78,8 @@ public class PurchaseActivity extends AppCompatActivity implements PurchasesUpda
     findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        getProductList();
+        Toast.makeText(getApplicationContext(), "Reload", Toast.LENGTH_SHORT).show();
+        getAllPurchaseSession();
       }
     });
   }
